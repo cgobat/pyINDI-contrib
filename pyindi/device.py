@@ -855,7 +855,8 @@ class device(ABC):
         astart
         """
 
-        self.mainloop = asyncio.get_event_loop()
+        if self.mainloop is None:
+            self.mainloop = asyncio.get_event_loop()
         self.reader, self.writer = self.mainloop.run_until_complete(stdio())
         self.running = True
         future = asyncio.gather(
@@ -874,7 +875,8 @@ class device(ABC):
         other device tasks.
         """
 
-        self.mainloop = asyncio.get_running_loop()
+        if self.mainloop is None:
+            self.mainloop = asyncio.get_event_loop()
         self.reader, self.writer = await stdio()
         self.running = True
         future = asyncio.gather(
