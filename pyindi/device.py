@@ -69,7 +69,7 @@ def printa(msg: Union[str, bytes]):
     We use the stdio fxn now.
     """
 
-    if type(msg) == bytes:
+    if isinstance(msg, bytes):
         msg = msg.decode()
     sys.stdout.write(msg)
     sys.stdout.flush()
@@ -772,7 +772,7 @@ class IBLOB(IProperty):
 
     @value.setter
     def value(self, val: bytes):
-        if type(val) != bytes:
+        if not isinstance(val, bytes):
             raise ValueError("""IBLOB value must by bytes type""")
 
         self.size = len(val)
@@ -1177,7 +1177,7 @@ class device(ABC):
         msgtype : str, optional
             one of "DEBUG", "INFO", "WARN", by default "INFO"
         """
-        if type(timestamp) == datetime.datetime:
+        if isinstance(timestamp, datetime.datetime):
             timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
 
         elif timestamp is None:
