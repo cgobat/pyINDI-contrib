@@ -1183,11 +1183,11 @@ class device(ABC):
         elif timestamp is None:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
-        xml = f'<message message="[{msgtype}] {msg}" '
-        xml += f'timestamp="{timestamp}" '
-        xml += f'device="{self.name()}"/> '
-
-        self.outq.put_nowait(xml.encode())
+        xml = etree.Element("message",
+                            attrib={"message": f"[{msgtype}] {msg}",
+                                    "timestamp": timestamp,
+                                    "device": self.name()})
+        self.outq.put_nowait(etree.tostring(xml))
         # self.writer.write(xml.encode())
 
     def IDSetNumber(self, n: INumberVector, msg=None):
