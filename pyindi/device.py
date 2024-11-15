@@ -324,7 +324,7 @@ class IVectorProperty(ABC):
             if hasattr(self, attribute.name):
                 ele.set(attribute.name, str(getattr(self, attribute.name)))
         for prop in self.iprops:
-            logging.warning(prop)
+            logging.debug(prop)
             ele.append(prop.Set())
 
         if msg is not None:
